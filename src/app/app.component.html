@@ -1,0 +1,33 @@
+<div class="container">
+  <ngb-alert [type]="'danger'" *ngIf="validateUser()"
+    >Please Enter a Valid GitHub Username !</ngb-alert
+  >
+  <button
+    (click)="reset()"
+    class="actionbtn backbtn"
+    *ngIf="userFound && !invalidUser"
+  >
+    Go Back
+  </button>
+  <header>{{ title }}</header>
+  <div class="img-container" *ngIf="!userFound || invalidUser">
+    <img class="gitavatar" src="../assets/gitavatar.svg" />
+  </div>
+  <div class="inputBox" *ngIf="!userFound || invalidUser">
+    <i class="fa fa-star" aria-hidden="true"></i>
+    <p class="input-label">GitHub Username</p>
+    <input type="text" name="username" [(ngModel)]="username" />
+    <button class="actionbtn" (click)="getResults()">Search</button>
+  </div>
+
+  <div class="detailsContainer" *ngIf="userFound && !invalidUser">
+    <app-main
+      [username]="username"
+      [userDetails]="userDetails"
+      [userRepositories]="userRepositories"
+      [isDataRetrieved]="isDataRetrieved"
+      [page_size]="page_size"
+      [page_num]="page_num"
+    ></app-main>
+  </div>
+</div>

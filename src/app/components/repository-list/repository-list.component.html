@@ -1,0 +1,87 @@
+<p class="repo-label">Repositories</p>
+<div class="repo-container" *ngIf="isDataRetrieved">
+  <div class="repo-card" *ngFor="let repo of userRepositories">
+    <div class="repo-topic">
+      <a href="{{ repo.html_url }}" target="_blank">{{ repo.name }}</a>
+    </div>
+    <div class="repo-description">
+      <span *ngIf="repo.description">{{ repo.description }}</span>
+      <span *ngIf="!repo.description">No Description</span>
+    </div>
+    <div class="tags">
+      <div class="meta-tags">
+        <span class="tag-container">
+          <span>{{ repo.stargazers_count }}</span>
+          <span class="label">Stars</span>
+        </span>
+        <span class="tag-container">
+          <span>{{ repo.forks_count }}</span>
+          <span class="label">Forks</span>
+        </span>
+      </div>
+      <div class="lang-tags">
+        <span class="tag-container" *ngFor="let tag of repo.tags">
+          {{ tag }}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="repo-container" *ngIf="!isDataRetrieved">
+  <div class="repo-card" *ngFor="let i of generateFake(page_size)">
+    <div class="repo-topic">
+      <ngx-skeleton-loader
+        appearance="line"
+        [theme]="{ height: '40px', backgroundColor: '#aaa' }"
+      ></ngx-skeleton-loader>
+    </div>
+    <div class="repo-description">
+      <ngx-skeleton-loader
+        appearance="line"
+        [theme]="{ height: '60px', backgroundColor: '#aaa' }"
+      ></ngx-skeleton-loader>
+    </div>
+    <div class="repo-tags">
+      <span *ngFor="let j of generateFake(2)">
+        <ngx-skeleton-loader
+          appearance="line"
+          [theme]="{
+            height: '25px',
+            width: '60px',
+            marginRight: '10px',
+            backgroundColor: '#aaa',
+            borderRadius: '20px'
+          }"
+        ></ngx-skeleton-loader>
+      </span>
+    </div>
+    <div class="repo-tags">
+      <span *ngFor="let j of generateFake(2)">
+        <ngx-skeleton-loader
+          appearance="line"
+          [theme]="{
+            height: '25px',
+            width: '60px',
+            marginRight: '10px',
+            backgroundColor: '#aaa',
+            borderRadius: '20px'
+          }"
+        ></ngx-skeleton-loader>
+      </span>
+    </div>
+  </div>
+</div>
+
+<div
+  class="pag-container"
+  style="padding: 40px 0 40px 0"
+  *ngIf="isDataRetrieved"
+>
+  <app-pagination
+    [page_num]="page_num"
+    [page_size]="page_size"
+    [total_pages]="total_pages"
+    (reloadRepoEvent)="reloadRepos($event)"
+  ></app-pagination>
+</div>
